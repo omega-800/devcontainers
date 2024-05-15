@@ -8,3 +8,7 @@ services:
       args:
         GIT_USER: ${GIT_USER}
         GIT_PASS: ${GIT_PASS}
+    volumes:
+      - ~/workspace:/workspace
+    ports:
+      - '2222:22'
