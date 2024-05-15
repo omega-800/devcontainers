@@ -1,0 +1,10 @@
+version: '3'
+services:
+  myarch:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile.arch
+      args:
+        GIT_USER: ${GIT_USER}
+        GIT_PASS: ${GIT_PASS}

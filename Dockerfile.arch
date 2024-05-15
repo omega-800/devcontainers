@@ -1,5 +1,8 @@
 FROM  archlinux:latest
 
+ARG GIT_USER=$GIT_USER
+ARG GIT_PASS=$GIT_PASS
+
 RUN   pacman -Syy
 RUN   pacman -S --noconfirm openssh vim git stow make
 
