@@ -1,0 +1,16 @@
+FROM  archlinux:latest
+
+RUN   pacman -Syy
+RUN   pacman -S --noconfirm openssh vim git stow make
+
+RUN   /usr/sbin/git clone https://${GIT_USER}:${GIT_PASS}@github.com/omega-800/dotfiles.git /root/dotfiles
+RUN   /usr/sbin/make -C /root/dotfiles
+RUN   sed -i -e 's/^alias vim/#alias vim/g' /root/.bashrc 
+
+RUN   /usr/bin/ssh-keygen -A
+RUN   echo 'root:root' | chpasswd
+RUN   sed -i -e 's/^UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]
