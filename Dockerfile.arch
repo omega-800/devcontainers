@@ -4,11 +4,16 @@ ARG GIT_USER=$GIT_USER
 ARG GIT_PASS=$GIT_PASS
 
 RUN   pacman -Syy
-RUN   pacman -S --noconfirm openssh vim git stow make
+RUN   pacman -S --noconfirm openssh vim git stow make gcc gdb valgrind debuginfod tmux neovim ripgrep less
 
 RUN   /usr/sbin/git clone https://${GIT_USER}:${GIT_PASS}@github.com/omega-800/dotfiles.git /root/dotfiles
 RUN   /usr/sbin/make -C /root/dotfiles
 RUN   sed -i -e 's/^alias vim/#alias vim/g' /root/.bashrc 
+RUN   /usr/sbin/git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+ENV DEBUGINFOD_URLS="https://debuginfod.archlinux.org"
+
+# RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 RUN   /usr/bin/ssh-keygen -A
 RUN   echo 'root:root' | chpasswd
